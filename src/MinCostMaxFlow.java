@@ -49,7 +49,7 @@ public class MinCostMaxFlow
     private static final int INF = Integer.MAX_VALUE;
     private static final Map<String, Integer> nodeMap = new HashMap<>();
 
-    private static int nameToId(String name)
+    private static int findEdge(String name)
     {
         if (!nodeMap.containsKey(name))
         {
@@ -99,8 +99,8 @@ public class MinCostMaxFlow
 
         for (int i = 0; i < n; i++)
         {
-            int inNode = nameToId("n" + (i + 1) + "-in");
-            int outNode = nameToId("n" + (i + 1) + "-out");
+            int inNode = findEdge("n" + (i + 1) + "-in");
+            int outNode = findEdge("n" + (i + 1) + "-out");
             g.addEdge(inNode, outNode, nodeCaps[i], 0);
         }
 
@@ -110,15 +110,15 @@ public class MinCostMaxFlow
             {
                 if (i != j && edgeCaps[i][j] != null && edgeCaps[i][j] > 0)
                 {
-                    int from = nameToId("n" + (i + 1) + "-out");
-                    int to = nameToId("n" + (j + 1) + "-in");
+                    int from = findEdge("n" + (i + 1) + "-out");
+                    int to = findEdge("n" + (j + 1) + "-in");
                     g.addEdge(from, to, edgeCaps[i][j], edgeCosts[i][j]);
                 }
             }
         }
 
-        int source = nameToId("n1-in");
-        int sink = nameToId("n7-out");
+        int source = findEdge("n1-in");
+        int sink = findEdge("n7-out");
 
         ResultIntPair result = minCostMaxFlow(g, source, sink);
 
